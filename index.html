@@ -1,150 +1,422 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-Chicken - Trang chủ</title>
-    
+    <title>K-Chicken - Đặt Gà Rán, Combo & Nước Uống</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
 
     <style>
-        
         .product-img {
-            height: 190px;
+            height: 185px;
             width: 100%;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
-        .card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        .category-card {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #eee;
             border-radius: 12px;
+            background-color: #fff;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        .category-card:hover,
+        .category-card.active {
+            border-color: #dc3545;
+            background-color: #fff5f5;
+            transform: translateY(-3px);
+        }
+
+        .food-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border-radius: 14px;
+        }
+
+        .food-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .banner-img {
             width: 100%;
-            height: 450px;
+            height: 400px;
             object-fit: cover;
+        }
+
+        .order-bar {
+            background: #212529;
+            color: #fff;
+            border-radius: 12px;
+        }
+
+        .badge-tag {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            z-index: 2;
         }
     </style>
 </head>
 
 <body>
 
-   
+    <!-- 1. NAVBAR -->
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-warning-subtle shadow-sm sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
             <div class="container">
-                
-                <a class="navbar-brand d-flex align-items-center fw-bold text-danger" href="index.html">
-                    <img src="img/Pacifico.jpg" alt="Logo K-Chicken" width="55" height="55" class="rounded-circle me-2 object-fit-cover">
+                <a class="navbar-brand d-flex align-items-center fw-bold text-danger fs-4" href="index.html">
+                    <img src="img/Pacifico.jpg" alt="Logo K-Chicken" width="48" height="48"
+                        class="rounded-circle me-2 object-fit-cover">
                     K-CHICKEN
                 </a>
 
-                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
                     aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                
                 <div class="collapse navbar-collapse" id="mainNavbar">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-semibold">
-                        <li class="nav-item">
-                            <a class="nav-link active text-danger" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#best-sellers">Shop by K-Chicken</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#about">About us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact us</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link active text-danger" href="#menu-section">Thực đơn</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#categories-section">Combo & Ưu đãi</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#footer-section">Hệ thống nhà hàng</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#footer-section">Liên hệ</a></li>
                     </ul>
 
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Tìm món ăn..." aria-label="Search">
-                        <button class="btn btn-danger" type="submit">
-                            <i class="bi bi-search"></i>
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="#menu-section" class="btn btn-danger fw-semibold px-3">Bắt đầu đặt hàng</a>
+                        <button class="btn btn-outline-dark position-relative" type="button" data-bs-toggle="offcanvas"
+                            data-bs-target="#cartDrawer" aria-controls="cartDrawer">
+                            <i class="bi bi-bag-fill"></i> Giỏ hàng
+                            <span id="cart-count" class="badge rounded-pill bg-danger">0</span>
                         </button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    
-    <section class="position-relative">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSerFOuSBmiG8jwTxpgfjcw9OmuIsz9RRRgSMBN31zEIw&s=10"
-            alt="K-Chicken Banner" class="banner-img">
+    <!-- 2. THANH CHỌN GIAO HÀNG / MANG ĐI -->
+    <div class="container mt-3">
+        <div class="order-bar p-3 d-flex flex-wrap align-items-center justify-content-between gap-3 shadow-sm">
+            <div class="d-flex align-items-center gap-2">
+                <span class="fw-semibold text-warning"><i class="bi bi-geo-alt-fill"></i> Đặt ngay:</span>
+                <div class="btn-group" role="group" aria-label="Chọn hình thức đặt">
+                    <input type="radio" class="btn-check" name="orderType" id="modeDelivery" value="Giao hàng" checked>
+                    <label class="btn btn-outline-warning btn-sm" for="modeDelivery">Giao hàng</label>
+
+                    <input type="radio" class="btn-check" name="orderType" id="modePickup" value="Mang đi">
+                    <label class="btn btn-outline-warning btn-sm" for="modePickup">Mang đi</label>
+                </div>
+            </div>
+
+            <div class="d-flex flex-grow-1 flex-md-grow-0 gap-2">
+                <input id="address-input" type="text" class="form-control form-control-sm"
+                    placeholder="Nhập địa chỉ giao hàng hoặc khu vực...">
+                <button type="button" class="btn btn-danger btn-sm text-nowrap fw-semibold" onclick="applyOrderMode()">
+                    Xác nhận
+                </button>
+            </div>
+        </div>
+        <div id="order-status" class="small text-muted mt-1 ps-1"></div>
+    </div>
+
+    <!-- 3. BANNER CHÍNH -->
+    <section class="container mt-3">
+        <div class="rounded-4 overflow-hidden shadow-sm">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSerFOuSBmiG8jwTxpgfjcw9OmuIsz9RRRgSMBN31zEIw&s=10"
+                alt="Banner K-Chicken" class="banner-img">
+        </div>
     </section>
 
-    
-    <section id="best-sellers" class="container my-5">
-        <h2 class="text-center fw-bold text-uppercase mb-4 text-danger">Best Sellers</h2>
-
-        
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4 text-center">
-
-            
+    <!-- 4. DANH MỤC MÓN ĂN (6 NHÓM LỌC NHANH) -->
+    <section id="categories-section" class="container my-5">
+        <h3 class="fw-bold mb-3">Danh Mục Món Ăn</h3>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-6 g-3 text-center">
             <div class="col">
-                <div class="card h-100 p-2 shadow-sm">
+                <div class="category-card p-3 active" onclick="filterCategory('all', this)">
+                    <i class="bi bi-grid-fill fs-3 text-danger d-block mb-1"></i>
+                    <span class="fw-semibold small">Tất cả món</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="category-card p-3" onclick="filterCategory('combo', this)">
+                    <i class="bi bi-box2-heart-fill fs-3 text-danger d-block mb-1"></i>
+                    <span class="fw-semibold small">Combo Tiết Kiệm</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="category-card p-3" onclick="filterCategory('ga', this)">
+                    <i class="bi bi-fire fs-3 text-danger d-block mb-1"></i>
+                    <span class="fw-semibold small">Gà Rán & Quay</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="category-card p-3" onclick="filterCategory('burger', this)">
+                    <i class="bi bi-egg-fried fs-3 text-danger d-block mb-1"></i>
+                    <span class="fw-semibold small">Burger & Tacos</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="category-card p-3" onclick="filterCategory('an-nhe', this)">
+                    <i class="bi bi-stars fs-3 text-danger d-block mb-1"></i>
+                    <span class="fw-semibold small">Thức Ăn Nhẹ</span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="category-card p-3" onclick="filterCategory('nuoc-uong', this)">
+                    <i class="bi bi-cup-straw fs-3 text-danger d-block mb-1"></i>
+                    <span class="fw-semibold small">Nước Ngọt & Trà</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. DANH SÁCH THỰC ĐƠN ĐA DẠNG (XẾP 4 MÓN / 1 HÀNG NGANG TRÊN DESKTOP) -->
+    <section id="menu-section" class="container my-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+            <h2 class="fw-bold text-uppercase text-danger m-0" id="menu-heading">Thực Đơn Nổi Bật</h2>
+            <div class="d-flex gap-2">
+                <input type="text" id="search-food" class="form-control form-control-sm" placeholder="Tìm tên món..."
+                    onkeyup="searchFood()">
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4" id="product-list">
+
+            <!-- COMBO 1 -->
+            <div class="col product-item" data-category="combo ga">
+                <div class="card food-card h-100 p-2 shadow-sm position-relative">
+                    <span class="badge bg-warning text-dark badge-tag">Combo 1 Người</span>
+                    <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80"
+                        class="card-img-top product-img" alt="Combo Gà Giòn 1 Người">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Combo Gà Giòn Solo</h5>
+                            <span class="fw-bold text-danger text-nowrap">79.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">2 Miếng Gà Rán + 1 Khoai Tây Chiên (vừa) + 1 Lon Coca-Cola.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Combo Gà Giòn Solo', 79000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMBO 2 -->
+            <div class="col product-item" data-category="combo burger">
+                <div class="card food-card h-100 p-2 shadow-sm position-relative">
+                    <span class="badge bg-warning text-dark badge-tag">Combo 1 Người</span>
+                    <img src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600&q=80"
+                        class="card-img-top product-img" alt="Combo Burger Zinger">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Combo Burger Gà</h5>
+                            <span class="fw-bold text-danger text-nowrap">85.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">1 Burger Gà Giòn + 1 Khoai Tây Chiên + 1 Lon Coca-Cola.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Combo Burger Gà', 85000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMBO 3 -->
+            <div class="col product-item" data-category="combo ga">
+                <div class="card food-card h-100 p-2 shadow-sm position-relative">
+                    <span class="badge bg-danger badge-tag">Combo Nhóm 2-3 Người</span>
+                    <img src="https://images.unsplash.com/photo-1513639776629-7b61b0ac49cb?auto=format&fit=crop&w=600&q=80"
+                        class="card-img-top product-img" alt="Combo Tiệc Gà Gia Đình">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Combo Nhóm Vui Vẻ</h5>
+                            <span class="fw-bold text-danger text-nowrap">169.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">4 Miếng Gà Rán + 1 Khoai Tây Lớn + 3 Cánh Gà Cay + 2 Coca-Cola.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Combo Nhóm Vui Vẻ', 169000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COMBO 4 -->
+            <div class="col product-item" data-category="combo burger">
+                <div class="card food-card h-100 p-2 shadow-sm position-relative">
+                    <span class="badge bg-danger badge-tag">Best Seller</span>
+                    <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80"
+                        class="card-img-top product-img" alt="Combo Tacos Đôi">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Combo Tacos Đôi</h5>
+                            <span class="fw-bold text-danger text-nowrap">99.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">2 Bánh Tacos Gà Nướng + 1 Khoai Tây Chiên + 2 Coca-Cola.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Combo Tacos Đôi', 99000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MÓN LẺ 1: CHICKEN WINGS -->
+            <div class="col product-item" data-category="ga">
+                <div class="card food-card h-100 p-2 shadow-sm">
                     <img src="https://cdn.jwplayer.com/v2/media/hSDHZUKa/thumbnails/VTdHvtoW.jpg"
                         class="card-img-top product-img" alt="Chicken Wings">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <h4 class="card-title fw-bold">Chicken Wings</h4>
-                        <p class="card-text text-muted small">Cánh gà chiên giòn sốt cay ngọt đậm vị Hàn Quốc.</p>
-                        <a href="#" class="btn btn-danger w-100 mt-2">Đặt món ngay</a>
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Chicken Wings (4 Miếng)</h5>
+                            <span class="fw-bold text-danger text-nowrap">59.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">Cánh gà chiên giòn rụm phủ sốt cay ngọt Hàn Quốc.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Chicken Wings (4 Miếng)', 59000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
                     </div>
                 </div>
             </div>
 
-            
-            <div class="col">
-                <div class="card h-100 p-2 shadow-sm">
+            <!-- MÓN LẺ 2: TACOS -->
+            <div class="col product-item" data-category="burger">
+                <div class="card food-card h-100 p-2 shadow-sm">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl30PlETQIDFqncrgsLL0UdkvkEwvx5Au9SqDaEDQuFQ&s"
                         class="card-img-top product-img" alt="Tacos">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <h4 class="card-title fw-bold">Tacos</h4>
-                        <p class="card-text text-muted small">Bánh vỏ giòn nhân thịt gà nướng và rau củ tươi.</p>
-                        <a href="#" class="btn btn-danger w-100 mt-2">Đặt món ngay</a>
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Tacos Gà Giòn</h5>
+                            <span class="fw-bold text-danger text-nowrap">49.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">Vỏ bánh giòn kèm nhân thịt gà xé, phô mai và rau tươi.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Tacos Gà Giòn', 49000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
                     </div>
                 </div>
             </div>
 
-            
-            <div class="col">
-                <div class="card h-100 p-2 shadow-sm">
+            <!-- MÓN LẺ 3: HAMBURGER -->
+            <div class="col product-item" data-category="burger">
+                <div class="card food-card h-100 p-2 shadow-sm">
                     <img src="https://assets.biggreenegg.eu/app/uploads/2019/03/28145521/topimage-classic-hamburger-2019m04-800x534-600x401.jpg"
                         class="card-img-top product-img" alt="Hamburger">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <h4 class="card-title fw-bold">Hamburger</h4>
-                        <p class="card-text text-muted small">Burger gà giòn phô mai tan chảy hấp dẫn.</p>
-                        <a href="#" class="btn btn-danger w-100 mt-2">Đặt món ngay</a>
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Hamburger Gà Quay</h5>
+                            <span class="fw-bold text-danger text-nowrap">65.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">Burger gà nướng tiêu đen đậm đà kèm xà lách giòn.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Hamburger Gà Quay', 65000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
                     </div>
                 </div>
             </div>
 
-            
-            <div class="col">
-                <div class="card h-100 p-2 shadow-sm">
+            <!-- MÓN LẺ 4: CHIPS -->
+            <div class="col product-item" data-category="an-nhe">
+                <div class="card food-card h-100 p-2 shadow-sm">
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG7CbMIExszSFAG7BtFnoZhk8aUMwfsbOrrqOfF02TBQ&s=10"
                         class="card-img-top product-img" alt="Chips">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <h4 class="card-title fw-bold">Chips</h4>
-                        <p class="card-text text-muted small">Khoai tây chiên giòn rụm ăn kèm sốt đặc biệt.</p>
-                        <a href="#" class="btn btn-danger w-100 mt-2">Đặt món ngay</a>
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Khoai Tây Chiên (Lớn)</h5>
+                            <span class="fw-bold text-danger text-nowrap">35.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">Khoai tây chiên vàng giòn nóng hổi kèm tương ớt.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Khoai Tây Chiên (Lớn)', 35000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MÓN LẺ 5: GÀ VIÊN POPCORN -->
+            <div class="col product-item" data-category="ga an-nhe">
+                <div class="card food-card h-100 p-2 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1562967914-608f82629710?auto=format&fit=crop&w=600&q=80"
+                        class="card-img-top product-img" alt="Gà Viên Popcorn">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Gà Viên Popcorn</h5>
+                            <span class="fw-bold text-danger text-nowrap">42.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">Gà viên chiên giòn vừa miệng, thơm béo bên trong.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Gà Viên Popcorn', 42000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NƯỚC UỐNG 1: COCA-COLA -->
+            <div class="col product-item" data-category="nuoc-uong">
+                <div class="card food-card h-100 p-2 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80"
+                        class="card-img-top product-img" alt="Coca-Cola">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Coca-Cola (Lon 320ml)</h5>
+                            <span class="fw-bold text-danger text-nowrap">17.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">Nước ngọt có gas Coca-Cola mát lạnh sảng khoái.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Coca-Cola (Lon 320ml)', 17000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NƯỚC UỐNG 2: COCA-COLA ZERO -->
+            <div class="col product-item" data-category="nuoc-uong">
+                <div class="card food-card h-100 p-2 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=600&q=80"
+                        class="card-img-top product-img" alt="Coca-Cola Zero">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Coca-Cola Zero</h5>
+                            <span class="fw-bold text-danger text-nowrap">17.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">Vị ngon nguyên bản không đường, ít calo.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Coca-Cola Zero', 17000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NƯỚC UỐNG 3: TRÀ ĐÀO CAM SẢ -->
+            <div class="col product-item" data-category="nuoc-uong">
+                <div class="card food-card h-100 p-2 shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80"
+                        class="card-img-top product-img" alt="Trà Đào Cam Sả">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start gap-2">
+                            <h5 class="card-title fw-bold mb-1">Trà Đào Mát Lạnh</h5>
+                            <span class="fw-bold text-danger text-nowrap">25.000₫</span>
+                        </div>
+                        <p class="card-text text-muted small flex-grow-1">Trà đào thanh mát kèm miếng đào giòn ngọt.</p>
+                        <button type="button" class="btn btn-danger w-100 fw-semibold mt-2"
+                            onclick="addToCart('Trà Đào Mát Lạnh', 25000)">
+                            <i class="bi bi-plus-circle"></i> Thêm
+                        </button>
                     </div>
                 </div>
             </div>
@@ -152,17 +424,157 @@
         </div>
     </section>
 
-    
-    <footer id="contact" class="bg-dark text-white text-center py-4 mt-5">
+    <!-- 6. GIỎ HÀNG TRƯỢT (OFFCANVAS) -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartDrawer" aria-labelledby="cartDrawerLabel">
+        <div class="offcanvas-header bg-danger text-white">
+            <h5 class="offcanvas-title fw-bold" id="cartDrawerLabel">Giỏ hàng của bạn</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column justify-content-between">
+            <div id="cart-items" class="list-group list-group-flush">
+                <p class="text-muted text-center my-4">Chưa có món nào trong giỏ hàng.</p>
+            </div>
+
+            <div class="border-top pt-3 mt-3">
+                <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
+                    <span>Tạm tính:</span>
+                    <span id="cart-total" class="text-danger">0₫</span>
+                </div>
+                <button type="button" class="btn btn-danger w-100 py-2 fw-bold" onclick="checkoutDemo()">
+                    Đặt hàng ngay
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. FOOTER -->
+    <footer id="footer-section" class="bg-dark text-white pt-5 pb-4 mt-5">
         <div class="container">
-            <h5 class="fw-bold text-warning">K-CHICKEN</h5>
-            <p class="mb-1 small">Thưởng thức gà rán và đồ ăn nhanh chuẩn vị.</p>
-            <p class="mb-0 small text-secondary">&copy; 2026 K-Chicken. All rights reserved.</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold text-warning">K-CHICKEN</h5>
+                    <p class="small text-secondary">Đặt gà rán, burger, combo và nước uống nhanh chóng trực tuyến.</p>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Danh Mục Món Ăn</h6>
+                    <ul class="list-unstyled small text-secondary">
+                        <li><a href="#categories-section" class="text-secondary text-decoration-none">Combo Tiết Kiệm</a></li>
+                        <li><a href="#categories-section" class="text-secondary text-decoration-none">Gà Rán & Burger</a></li>
+                        <li><a href="#categories-section" class="text-secondary text-decoration-none">Nước Ngọt Coca-Cola</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="fw-bold">Hỗ Trợ & Chính Sách</h6>
+                    <ul class="list-unstyled small text-secondary">
+                        <li>Theo dõi đơn hàng</li>
+                        <li>Chính sách giao hàng</li>
+                        <li>Liên hệ: lienhe@k-chicken.vn</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-secondary my-4">
+            <p class="text-center small text-secondary mb-0">&copy; 2026 K-Chicken. All rights reserved.</p>
         </div>
     </footer>
 
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let cart = [];
+
+        function formatVND(amount) {
+            return amount.toLocaleString("vi-VN") + "₫";
+        }
+
+        function applyOrderMode() {
+            const mode = document.querySelector('input[name="orderType"]:checked').value;
+            const addr = document.getElementById("address-input").value.trim();
+            const statusEl = document.getElementById("order-status");
+            statusEl.textContent = addr
+                ? `Đang chọn: ${mode} tới "${addr}".`
+                : `Đang chọn hình thức: ${mode}.`;
+        }
+
+        function filterCategory(category, el) {
+            document.querySelectorAll(".category-card").forEach(card => card.classList.remove("active"));
+            el.classList.add("active");
+
+            document.querySelectorAll(".product-item").forEach(item => {
+                const cats = item.getAttribute("data-category").split(" ");
+                const show = category === "all" || cats.includes(category);
+                item.classList.toggle("d-none", !show);
+            });
+        }
+
+        function searchFood() {
+            const keyword = document.getElementById("search-food").value.toLowerCase().trim();
+            document.querySelectorAll(".product-item").forEach(item => {
+                const title = item.querySelector(".card-title").textContent.toLowerCase();
+                const desc = item.querySelector(".card-text").textContent.toLowerCase();
+                const match = title.includes(keyword) || desc.includes(keyword);
+                item.classList.toggle("d-none", !match);
+            });
+        }
+
+        function addToCart(name, price) {
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ name, price, qty: 1 });
+            }
+            renderCart();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            renderCart();
+        }
+
+        function renderCart() {
+            const countEl = document.getElementById("cart-count");
+            const listEl = document.getElementById("cart-items");
+            const totalEl = document.getElementById("cart-total");
+
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+            countEl.textContent = totalQty;
+            totalEl.textContent = formatVND(totalPrice);
+
+            if (cart.length === 0) {
+                listEl.innerHTML = '<p class="text-muted text-center my-4">Chưa có món nào trong giỏ hàng.</p>';
+                return;
+            }
+
+            listEl.innerHTML = cart.map((item, idx) => `
+                <div class="list-group-item d-flex justify-content-between align-items-center px-0">
+                    <div>
+                        <div class="fw-semibold">${item.name}</div>
+                        <small class="text-danger">${formatVND(item.price * item.qty)}</small>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="changeQty(${idx}, -1)">-</button>
+                        <span>${item.qty}</span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="changeQty(${idx}, 1)">+</button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function checkoutDemo() {
+            if (cart.length === 0) {
+                alert("Bạn chưa chọn món nào!");
+                return;
+            }
+            const mode = document.querySelector('input[name="orderType"]:checked').value;
+            alert(`Đã ghi nhận đơn (${mode}) với tổng tiền ${document.getElementById("cart-total").textContent}!`);
+            cart = [];
+            renderCart();
+        }
+    </script>
 </body>
 
 </html>
